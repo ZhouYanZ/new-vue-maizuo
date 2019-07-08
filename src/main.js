@@ -11,3 +11,10 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+
+/*
+  父组件如何调用子组件中的方法？
+    通过this.$refs
+
+*/

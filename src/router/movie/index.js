@@ -4,16 +4,33 @@ export default {
     component:()=>import("views/movie"),
     name:"movie",
     redirect:"/movie/movieBody",
+    meta:{
+        tabBarFlag:true
+    },
     children:[
         {
             path:"movieBody",
             component:()=>import("components/movieBody"),
-            name:"moviebody"
+            name:"moviebody",
+            meta:{
+                tabBarFlag:true
+            }
         },
         {
             path:"movieComming",
             component:()=>import("components/movieComming"),
-            name:"moviecomming"
+            name:"moviecomming",
+            meta:{
+                tabBarFlag:true
+            }
+        },
+        {
+            path:"search",
+            component:()=>import("views/search"),
+            name:"search",
+            meta:{
+                tabBarFlag:false
+            }
         }
     ]
 }

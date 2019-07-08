@@ -12,7 +12,7 @@
                 <router-link class="movie_menu_active" to="/movie/movieBody" tag="li">正在热映</router-link>
                 <router-link to="/movie/movieComming" tag="li">即将上映</router-link>
             </ul>
-            <router-link class="movie_meun_search" to="/search" tag="div">
+            <router-link class="movie_meun_search" to="/movie/search" tag="div">
                 <i class="iconfont">&#xe613;</i>
             </router-link>
         </div>
@@ -52,6 +52,10 @@ export default {
     align-items: center;
     padding: 0 .4rem;
     border: 1px solid #e6e6e6;
+    position: fixed;
+    left: 0;
+    top: 1rem;
+    z-index: 2;
 }
 #content .movie_menu .movie_menu_city span{
     font-size: .3rem;
@@ -86,10 +90,10 @@ export default {
 
 /*movie_body*/
 #content .movie_body{
-    height: 100%;
     padding-bottom: 1rem;
     padding-left: .2rem;
     padding-right: .2rem;
+    padding-top: .9rem;
     overflow-x:hidden;
 }
 #content .movie_body .movie_item{

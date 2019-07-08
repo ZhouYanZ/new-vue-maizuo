@@ -6,7 +6,6 @@ import movie from "./movie";
 import cinema from "./cinema"
 import mine from "./mine";
 import city from "./city";
-import search from "./search"
 
 export default new Router({
   routes: [
@@ -17,7 +16,6 @@ export default new Router({
     movie,
     cinema,
     mine,
-    city,
-    search
+    city
   ]
 })
