@@ -1,25 +1,32 @@
 <template>
-  <div>
+  <div class="city_container">
     <Loading v-if="cityFlag" />
     <div class="city_body" ref="scroll" v-if="!cityFlag">
       <!--热门城市-->
-      <div>
-        <div class="hot_city">
-          <div class="hot_title">热门城市</div>
-          <div class="hot_city_list">
-            <div class="hot_city_name" v-for="(item,index) in hotList" :key="index">{{item.nm}}</div>
+      <BScroll ref="bscroll">
+        <div>
+          <div class="hot_city">
+            <div class="hot_title">热门城市</div>
+            <div class="hot_city_list">
+              <div class="hot_city_name" v-for="(item,index) in hotList" :key="index">{{item.nm}}</div>
+            </div>
           </div>
-        </div>
-        <!--城市列表-->
-        <div class="city_list" ref="domTop">
-          <div class="city_list_item" v-for="(item,index) in cityList" :key="index">
-            <div class="city_title_letter">{{item.index}}</div>
-            <div class="city_list_name">
-              <div class="city_list_name_item" v-for="(itm,idx) in item.list" :key="idx">{{itm.nm}}</div>
+          <!--城市列表-->
+          <div class="city_list" ref="domTop">
+            <div class="city_list_item" v-for="(item,index) in cityList" :key="index">
+              <div class="city_title_letter">{{item.index}}</div>
+              <div class="city_list_name">
+                <div
+                  class="city_list_name_item"
+                  v-for="(itm,idx) in item.list"
+                  :key="idx"
+                  @tap="handleModifyCity(itm)"
+                >{{itm.nm}}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </BScroll>
 
       <!--城市列表下标-->
       <div class="city_list_index">
@@ -35,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState,mapMutations} from "vuex";
 export default {
   name: "city",
   created() {
@@ -52,13 +59,22 @@ export default {
     ...mapActions({
       getCityList: "city/getCityList"
     }),
+    ...mapMutations({
+      handleModifyCityInfo:"city/handleModifyCityInfo"
+    }),
     handleTo(index) {
       //console.log(index);
 
       let letterDom = this.$refs.domTop.querySelectorAll(".city_title_letter");
       let t = letterDom[index].offsetTop;
       //当前元素必须加一个height：100% 高度与父级的高度一样 子级的高度必须大于父级的高度
-      this.$refs.scroll.scrollTop = t;
+      //this.$refs.scroll.scrollTop = t;
+      this.$refs.bscroll.handleScrollTo(-t)
+
+    },
+    handleModifyCity(itm){
+      this.$router.push("/movie");
+      this.handleModifyCityInfo(itm)
     }
   }
 };
@@ -66,6 +82,9 @@ export default {
 
 
 <style scoped>
+.city_container{
+  height: 100%;
+}
 .city_body {
   background: #ebebeb;
   overflow: auto;

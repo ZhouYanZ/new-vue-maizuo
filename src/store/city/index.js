@@ -2,7 +2,9 @@ import {cityList} from "api/city";
 const state = {
     cityList:[],
     hotList:[],
-    cityFlag:true
+    cityFlag:true,
+    cityName:sessionStorage.getItem('cityName')||"上海",
+    cityId:sessionStorage.getItem('cityId') || 10
 }
 
 const mutations = {
@@ -81,6 +83,13 @@ const mutations = {
         
 
 
+    },
+    handleModifyCityInfo(state,params){
+        state.cityName = params.nm;
+        state.cityId = params.id;
+
+        sessionStorage.setItem("cityName",params.nm)
+        sessionStorage.setItem("cityId",params.id)
     }
 }
 

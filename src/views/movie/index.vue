@@ -5,7 +5,7 @@
         
         <div class="movie_menu">
             <router-link class="movie_menu_city" to="/city" tag="div">
-                <span>北京</span>
+                <span>{{cityName}}</span>
                 <i class="iconfont">&#xe627;</i>
             </router-link>
             <ul class="movie_menu_switch">
@@ -16,16 +16,48 @@
                 <i class="iconfont">&#xe613;</i>
             </router-link>
         </div>
-       <router-view/>
+     <keep-alive>
+       <router-view ref="com"/>
+     </keep-alive>
     </div>
     </div>
 </template>
 <script>
+import {mapState,mapMutations} from "vuex";
 import MovieBody from "components/movieBody"
+import {messageBox} from "common/messageBox/index.js"
+import {getLocation} from "api/city"
 export default {
     name:"movie",
     components:{
         MovieBody
+    },
+    computed:{
+        ...mapState({
+            cityName:state=>state.city.cityName,
+            cityId:state=>state.city.cityId
+        })
+    },
+    methods:{
+        ...mapMutations({
+            handleModifyCityInfo:"city/handleModifyCityInfo"
+        }),
+        
+    },
+    async activated(){
+  
+        let data = await getLocation();
+      if(this.cityId != data.data.id){
+           messageBox({
+                title:"城市定位",
+                content:data.data.nm,
+                btn:"确认",
+                handleOk:()=>{
+                    this.handleModifyCityInfo(data.data);
+                    this.$refs.com.handleGetMovie();
+                }
+           })
+      }
     }
 }
 </script>

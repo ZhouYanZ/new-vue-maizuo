@@ -6,5 +6,8 @@ Vue.component("HeaderCom",Header)
 Vue.component("BScroll",BScroll)
 Vue.component("Loading",Loading)
 Vue.filter("toImg",(url,params)=>{
-    return url.replace(/w\.h/,params);
+    if(url){
+        return url.replace(/w\.h/,params);
+    }
+    
 })

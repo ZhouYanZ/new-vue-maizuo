@@ -13,33 +13,34 @@ export default {
   },
   mounted() {
     this.scroll = new BScroll(this.$refs.wrapper, {
-      probeType: 1
-    });
-
-    this.scroll.on("scroll", ({ x, y }) => {
-      if (y > 30) {
-          this.scrollstart();
-      }
-    });
-
-    this.scroll.on("scrollEnd", () => {
-      setTimeout(() => {
-          this.scrollEnd();
-      }, 1000);
-    });
+      probeType: 1,
+      tap:true,
+      click:true
+    });    
   },
   methods:{
-      scrollstart(cb){
-       cb && cb()
-      },
-      scrollEnd(cb){
-         cb && cb()
-      }
+     handleScrollTo(y){
+       this.scroll.scrollTo(0,y,300)
+     },
+     handleScrollStart(cb){
+       this.scroll.on("scroll",({x,y})=>{
+         if(y>30){
+           cb()
+         }
+       })
+     },
+     handleScrollEnd(cb){
+       this.scroll.on("scrollEnd",()=>{
+          setTimeout(()=>{
+             cb();
+          },2000)
+       })
+     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .wrapper {
   height: 100%;
 }
